@@ -24,7 +24,11 @@ public class SurfaceMap(int width, int height)
 
     private bool IsInBounds(int x, int y) => x >= 0 && x < Width && y >= 0 && y < Height;
 
-    public bool CanPlace(int x, int y) => this[x, y] == SurfaceType.Flat;
+    public bool CanPlace(int x, int y)
+    {
+        var tile = new Tile(this[x, y]);
+        return tile.CanPlace;
+    }
 
     public void FillArea(int x1, int y1, int x2, int y2, SurfaceType surfaceType)
     {
