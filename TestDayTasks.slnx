@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Map/">
+    <Project Path="Map/Surface/Surface.csproj" />
+    <Project Path="Map\Surface.Tests\Surface.Tests.csproj" Type="Classic C#" />
+  </Folder>
+</Solution>
