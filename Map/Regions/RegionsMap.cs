@@ -25,7 +25,7 @@ public class RegionsMap(
         }
     }
 
-    public bool IsTileInRegion(int x, int y) => this[x, y].HasValue;
+    public bool IsTileInRegion(uint regionId, int x, int y) => this[x, y] == regionId;
 
     public IReadOnlyList<Region> GetIntersectedRegions(int x1, int y1, int x2, int y2)
     {
@@ -48,9 +48,11 @@ public class RegionsMap(
             }
         }
 
-        return intersectedRegionIds
-            .Select(id => _regions[id])
-            .ToList();
+        return intersectedRegionIds.Contains(0)
+            ? []
+            : intersectedRegionIds
+                .Select(id => this[id]!)
+                .ToList();
     }
 
     private bool IsInBounds(int x, int y)

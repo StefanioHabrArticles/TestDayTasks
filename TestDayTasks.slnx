@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Map/">
+    <Project Path="Map\Regions.Tests\Regions.Tests.csproj" Type="Classic C#" />
     <Project Path="Map\Regions\Regions.csproj" Type="Classic C#" />
   </Folder>
 </Solution>

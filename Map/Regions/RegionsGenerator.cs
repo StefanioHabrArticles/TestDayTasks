@@ -2,7 +2,7 @@ namespace Regions;
 
 public class RegionsGenerator : IRegionsGenerator
 {
-    public RegionsGeneratorResult Generate(int width, int height, int regionsCount = 10)
+    public RegionsGeneratorResult Generate(int width, int height, int regionsCount)
     {
         if (regionsCount <= 0 || width <= 0 || height <= 0)
         {
@@ -12,11 +12,18 @@ public class RegionsGenerator : IRegionsGenerator
         // Calculate grid dimensions for equal-sized regions
         var totalArea = width * height;
         var targetRegionArea = totalArea / regionsCount;
-        var regionSize = (int)Math.Ceiling(Math.Sqrt(targetRegionArea));
+        int regionSize, regionsX, regionsY;
+        while (true)
+        {
+            regionSize = (int)Math.Floor(Math.Sqrt(targetRegionArea));
 
-        // Calculate how many regions fit in each dimension
-        var regionsX = (int)Math.Ceiling((double)width / regionSize);
-        var regionsY = (int)Math.Ceiling((double)height / regionSize);
+            regionsX = (int)Math.Floor((double)width / regionSize);
+            regionsY = (int)Math.Floor((double)height / regionSize);
+
+            if (regionsX * regionsY > regionsCount)
+                break;
+            targetRegionArea--;
+        }
 
         // Create tiles array
         var tiles = new uint[width * height];
@@ -50,11 +57,13 @@ public class RegionsGenerator : IRegionsGenerator
 
                 // Create region with GUID name
                 regions.Add(new Region(regionId, Name: Guid.NewGuid().ToString()));
+                if (regions.Count == regionsCount)
+                    return new RegionsGeneratorResult(tiles, regions);
 
                 regionId++;
             }
         }
 
-        return new RegionsGeneratorResult(tiles, regions);
+        return RegionsGeneratorResult.Empty;
     }
 }
