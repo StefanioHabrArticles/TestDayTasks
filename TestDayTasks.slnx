@@ -1,3 +1,8 @@
 <Solution>
-  <Folder Name="/Map/" />
+  <Folder Name="/Map/">
+    <Project Path="Map\Objects\Objects.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/SolutionItems/">
+    <File Path="docker-compose.yml" />
+  </Folder>
 </Solution>
