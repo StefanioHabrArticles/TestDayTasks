@@ -43,7 +43,7 @@ public class ObjectsMap(
         return await Get(objectId);
     }
 
-    public async IAsyncEnumerable<ObjectInfo> Get(int x1, int y1, int x2, int y2)
+    public async Task<List<ObjectInfo>> Get(int x1, int y1, int x2, int y2)
     {
         var geoKey = keyProvider.GetGeoKey();
 
@@ -58,14 +58,16 @@ public class ObjectsMap(
             new GeoSearchBox(x2 - x1, y2 - y1),
             order: Order.Ascending);
 
+        List<ObjectInfo> objectInfos = [];
         foreach (var result in results)
         {
             var objectId = uint.Parse(result.Member.ToString());
             var objectInfo = await Get(objectId);
             if (objectInfo is null)
                 continue;
-            yield return objectInfo;
+            objectInfos.Add(objectInfo);
         }
+        return objectInfos;
     }
 
     public async Task Add(ObjectInfo objectInfo)
