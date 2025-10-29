@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MagicOnion" Version="7.0.6" />
+        <PackageReference Include="MemoryPack" Version="1.21.4" />
+        <PackageReference Include="Riok.Mapperly" Version="4.3.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Map\Objects\Objects.csproj" />
+      <ProjectReference Include="..\Map\Regions\Regions.csproj" />
+    </ItemGroup>
+
+</Project>

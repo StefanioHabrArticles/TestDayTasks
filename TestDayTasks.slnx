@@ -8,4 +8,5 @@
   <Folder Name="/SolutionItems/">
     <File Path="docker-compose.yml" />
   </Folder>
+  <Project Path="Network\Network.csproj" Type="Classic C#" />
 </Solution>
