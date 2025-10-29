@@ -1,4 +1,3 @@
-using DotNet.Testcontainers.Builders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using StackExchange.Redis;
