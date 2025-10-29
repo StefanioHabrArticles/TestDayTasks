@@ -10,6 +10,19 @@ public class ObjectsMap(
 {
     private readonly IDatabase _db = redis.GetDatabase();
 
+    public event EventHandler<ObjectAddedEventArgs>? ObjectAdded;
+    public event EventHandler<ObjectDeletedEventArgs>? ObjectDeleted;
+
+    protected virtual void OnObjectAdded(ObjectInfo objectInfo)
+    {
+        ObjectAdded?.Invoke(this, new ObjectAddedEventArgs(objectInfo));
+    }
+
+    protected virtual void OnObjectDeleted(uint id)
+    {
+        ObjectDeleted?.Invoke(this, new ObjectDeletedEventArgs(id));
+    }
+
     public async Task<ObjectInfo?> Get(uint id)
     {
         var key = keyProvider.GetKey(id);
@@ -83,7 +96,12 @@ public class ObjectsMap(
         var transaction = _db.CreateTransaction();
         await transaction.StringSetAsync(key, json);
         await transaction.GeoAddAsync(geoKey, longitude, latitude, objectInfo.Id.ToString());
-        await transaction.ExecuteAsync();
+        var result = await transaction.ExecuteAsync();
+
+        if (result)
+        {
+            OnObjectAdded(objectInfo);
+        }
     }
 
     public async Task Delete(uint id)
@@ -94,6 +112,11 @@ public class ObjectsMap(
         var transaction = _db.CreateTransaction();
         await transaction.KeyDeleteAsync(key);
         await transaction.GeoRemoveAsync(geoKey, id.ToString());
-        await transaction.ExecuteAsync();
+        var result = await transaction.ExecuteAsync();
+
+        if (result)
+        {
+            OnObjectDeleted(id);
+        }
     }
 }
