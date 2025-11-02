@@ -94,8 +94,8 @@ public class ObjectsMap(
         var latitude = geoCoordinates[1];
 
         var transaction = _db.CreateTransaction();
-        await transaction.StringSetAsync(key, json);
-        await transaction.GeoAddAsync(geoKey, longitude, latitude, objectInfo.Id.ToString());
+        _ = transaction.StringSetAsync(key, json);
+        _ = transaction.GeoAddAsync(geoKey, longitude, latitude, objectInfo.Id.ToString());
         var result = await transaction.ExecuteAsync();
 
         if (result)
@@ -110,8 +110,8 @@ public class ObjectsMap(
         var geoKey = keyProvider.GetGeoKey();
 
         var transaction = _db.CreateTransaction();
-        await transaction.KeyDeleteAsync(key);
-        await transaction.GeoRemoveAsync(geoKey, id.ToString());
+        _ = transaction.KeyDeleteAsync(key);
+        _ = transaction.GeoRemoveAsync(geoKey, id.ToString());
         var result = await transaction.ExecuteAsync();
 
         if (result)

@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Objects.Tests;
 
+[Collection(nameof(ObjectsMapCollection))]
 public class ObjectsMapTests(ObjectsMapFixture fixture) : IClassFixture<ObjectsMapFixture>
 {
     private readonly ServiceProvider _serviceProvider = fixture.ServiceProvider;
@@ -67,7 +68,7 @@ public class ObjectsMapTests(ObjectsMapFixture fixture) : IClassFixture<ObjectsM
         await objectsMap.Add(objectInfo);
 
         // Act
-        var result = await objectsMap.Get(30, 40);
+        var result = await objectsMap.Get(33, 44);
 
         // Assert
         result.Should().NotBeNull();
